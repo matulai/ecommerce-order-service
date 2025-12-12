@@ -10,41 +10,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(TestcontainersConfiguration.class)
 @AutoConfigureWireMock(port = 0)
+@ActiveProfiles("test")
 class OrderServiceApplicationTests {
 
 	@LocalServerPort
 	private Integer port;
 
-	@Container
-	static MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.3.0");
-
-	@DynamicPropertySource
-	static void configureProperties(DynamicPropertyRegistry registry) {
-		// if the database is SQL or NoSQL the way to set the configuration changes.
-		registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-		registry.add("spring.datasource.username", mySQLContainer::getUsername);
-		registry.add("spring.datasource.password", mySQLContainer::getPassword);
-	}
-
 	@BeforeEach
 	void setup() {
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = port;
-	}
-
-	static {
-		mySQLContainer.start();
 	}
 
 	@Test
