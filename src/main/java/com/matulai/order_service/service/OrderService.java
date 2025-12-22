@@ -27,9 +27,9 @@ public class OrderService {
     }
 
     public void placeOrder(OrderRequest orderRequest) {
-        var isProductInStock = inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
+//        var isProductInStock = inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
 
-        if (isProductInStock) {
+        if (true) {
             Order order = new Order();
             order.setOrderNumber(UUID.randomUUID().toString());
             order.setPrice(orderRequest.price());
