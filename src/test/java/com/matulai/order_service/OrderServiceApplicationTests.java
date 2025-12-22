@@ -38,7 +38,12 @@ class OrderServiceApplicationTests {
                 {
                      "skuCode": "iphone_15",
                      "price": 1000,
-                     "quantity": 1
+                     "quantity": 1,
+                     "userDetails": {
+                     	"email": "prueba@hotmail.com",
+                     	"firstName": "test",
+                     	"lastName": "testing"
+                     }
                 }
                 """;
 
